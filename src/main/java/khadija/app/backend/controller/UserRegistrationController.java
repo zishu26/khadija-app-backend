@@ -26,19 +26,19 @@ public class UserRegistrationController {
     }
 
     @GetMapping("/search/registeredUser/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userRegistrationService.getUserById(id));
     }
 
     @DeleteMapping("/delete/registeredUser/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteUserById(@PathVariable("id") Long id) {
         userRegistrationService.deleteUserById(id);
         return ResponseEntity.ok("Deleted Successfully");
     }
 
     @PutMapping("/update/registeredUser/{id}")
     public ResponseEntity<UserDTO> updateUser(
-            @Valid @RequestBody UserDTO dto, @PathVariable Long id) {
+            @Valid @RequestBody UserDTO dto, @PathVariable("id") Long id) {
         return ResponseEntity.ok(userRegistrationService.updateUser(id, dto));
     }
 }

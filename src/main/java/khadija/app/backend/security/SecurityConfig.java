@@ -2,6 +2,8 @@ package khadija.app.backend.security;
 
 import khadija.app.backend.service.ExternalUserDetailsService;
 import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +43,12 @@ public class SecurityConfig {
                                         .permitAll()
                                         .requestMatchers("/userRegistration/getAllRegisteredUsers")
                                         .permitAll()
+                                        .requestMatchers("/userRegistration/register")
+                                        .permitAll()
+                                        .requestMatchers("/khadija/api/weight/add/weightrecord")
+                                        .permitAll()
+                                        .requestMatchers("/khadija/api/weight/get/weightrecord/all")
+                                        .permitAll()
                                         .anyRequest()
                                         .authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -68,17 +76,21 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // CORS configuration
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*")); // change * to frontend URL in production
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+
+        configuration.setAllowedOriginPatterns(
+                List.of("http://localhost:5173")
+        );
+
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }
