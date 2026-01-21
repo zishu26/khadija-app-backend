@@ -45,10 +45,10 @@ public class SecurityConfig {
                                         .permitAll()
                                         .requestMatchers("/userRegistration/register")
                                         .permitAll()
-                                        .requestMatchers("/khadija/api/weight/add/weightrecord")
+/*                                        .requestMatchers("/khadija/api/weight/add/weightrecord")
                                         .permitAll()
                                         .requestMatchers("/khadija/api/weight/get/weightrecord/all")
-                                        .permitAll()
+                                        .permitAll()*/
                                         .anyRequest()
                                         .authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -81,7 +81,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOriginPatterns(
-                List.of("http://localhost:5173")
+                List.of("http://localhost:5173", "http://localhost:5180")
         );
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
